@@ -105,26 +105,48 @@ namespace CantataAIMod
             File.WriteAllText(Path.Combine(Paths.GameRootPath, "BepInEx", "dump_" + HScen.Value + ".txt"), sb.ToString());
         }
         static float hGoal;
+        // Fair belief layer: only what own units have seen. id -> (tile, round seen)
+        static readonly Dictionary<Player, Dictionary<Interactable, (Tile t, int r)>> belief = new Dictionary<Player, Dictionary<Interactable, (Tile t, int r)>>();
+        const int BeliefDecay = 20;
         static void Goals()
         {
-            var map = MatchManager.CurrentMap;
+            var map = MatchManager.CurrentMap; var rnd = new System.Random();
             foreach (var pl in MatchManager.PlayerList)
             {
                 if (pl.Eliminated || pl.Faction.ToString() == "Environment") continue;
-                Tile tgt = null; string why = "";
-                foreach (var o in MatchManager.ObjectivesManager.Objectives)
-                {
-                    if (!o.Enabled || o.TargetPlayerScenarioID != pl.ScenarioID || o.Completed()) continue;
-                    foreach (var l in o.Locations) { float x = 0, y = 0; int c = 0; foreach (var tl in l.Tiles) { x += tl.X; y += tl.Y; c++; } Tile ct; if (c > 0 && map.GetTileAtCoords((int)(x / c), (int)(y / c), out ct)) { tgt = ct; why = o.Name; break; } }
-                    if (tgt != null) break;
-                }
                 var units = pl.OnMapInteractables.Where(u => u.CanMoveCheck).ToList();
                 if (units.Count == 0) continue;
+                if (!belief.TryGetValue(pl, out var bl)) belief[pl] = bl = new Dictionary<Interactable, (Tile, int)>();
+                int rd = MatchManager.RoundNumber;
+                foreach (var u in pl.OnMapInteractables)
+                {
+                    foreach (var e in u.LocalVisibleEnemyInteractables) if (e.CurrentTile != null) bl[e] = (e.CurrentTile, rd);
+                }
+                var vis = new HashSet<Tile>(); foreach (var u in pl.OnMapInteractables) vis.UnionWith(u.VisibleTiles);
+                var seenNow = new HashSet<Interactable>(); foreach (var u in pl.OnMapInteractables) seenNow.UnionWith(u.LocalVisibleEnemyInteractables);
+                foreach (var k in bl.Keys.ToList())
+                {
+                    var v = bl[k];
+                    if (k == null || k.OffMap || rd - v.r > BeliefDecay || (!seenNow.Contains(k) && vis.Contains(v.t))) bl.Remove(k); // gone or decayed
+                }
+                Tile tgt = null; string why = "";
+                var me = units[0].CurrentTile; int bd = int.MaxValue;
+                foreach (var kv in bl) { int d = Math.Abs(kv.Value.t.X - me.X) + Math.Abs(kv.Value.t.Y - me.Y); if (d < bd) { bd = d; tgt = kv.Value.t; why = "believed enemy"; } }
                 if (tgt == null)
                 {
-                    int bd = int.MaxValue; var me = units[0].CurrentTile;
-                    foreach (var q in MatchManager.PlayerList) { if (q == pl || q.Team == pl.Team) continue; foreach (var e in q.OnMapInteractables) { var et = e.CurrentTile; if (et == null || !pl.ExploredTiles.Contains(et)) continue; int d = Math.Abs(et.X - me.X) + Math.Abs(et.Y - me.Y); if (d < bd) { bd = d; tgt = et; why = "seen enemy"; } } }
+                    foreach (var o in MatchManager.ObjectivesManager.Objectives)
+                    {
+                        if (!o.Enabled || o.TargetPlayerScenarioID != pl.ScenarioID || o.Completed()) continue;
+                        foreach (var l in o.Locations) { float x = 0, y = 0; int c = 0; foreach (var tl in l.Tiles) { x += tl.X; y += tl.Y; c++; } Tile ct; if (c > 0 && map.GetTileAtCoords((int)(x / c), (int)(y / c), out ct)) { tgt = ct; why = o.Name; break; } }
+                        if (tgt != null) break;
+                    }
                 }
+                if (tgt == null)
+                {   // scout: random unexplored tile (belief empty -> infer enemy is where we have not looked)
+                    var unk = map.Tiles.Where(t => !pl.ExploredTiles.Contains(t)).ToList();
+                    if (unk.Count > 0) { tgt = unk[rnd.Next(unk.Count)]; why = "scout"; }
+                }
+                if (Csv != null && bl.Count > 0) Csv.WriteLine("BELIEF " + pl.Faction + " n=" + bl.Count + " why=" + why);
                 if (tgt == null) continue;
                 foreach (var u in units) { try { u.SetPatrol((tgt, null)); } catch { } }
                 Debug.Log("[AIMod] goal P" + pl.ScenarioID + " -> " + tgt.X + "," + tgt.Y + " (" + why + ") units=" + units.Count);
@@ -280,14 +302,16 @@ namespace CantataAIMod
 
 namespace CantataAIMod
 {
+    // Fairness: each AI player acts only on tiles ITS OWN units explored (no global fog lift).
     [HarmonyPatch(typeof(AIManager), "GatherViableTilesForAIActing")]
     static class P_Viable
     {
         static bool Prefix(ref HashSet<Tile> __result)
         {
             if (Plugin.HEnabled == null || !Plugin.HEnabled.Value) return true;
-            if (MatchManager.CurrentPlayer != null && MatchManager.CurrentPlayer.Faction.ToString() == "Environment") return true;
-            __result = new HashSet<Tile>(MatchManager.CurrentMap.Tiles);
+            var cp = MatchManager.CurrentPlayer;
+            if (cp == null || cp.Faction.ToString() == "Environment") return true;
+            __result = cp.ExploredTiles;
             return false;
         }
     }

@@ -26,8 +26,11 @@ Stock AI eliminated the 10-unit side 0/10 times; with the mod 9/10 (mean round ~
 Idea: hook the AI into the game's narrative/objective system instead of only fighting what it sees.
 - **Objective goals** in the utility AI: read the active objectives and their hint zones; reach/escape -> move units to the zone, survive/protect -> hold, kill target -> focus that unit, capture -> take the region.
 - **Dialog auto-advance** so story popups never block an AI-driven run (done in the harness).
-- **Fog gate**: stock AI only acts on explored tiles; lift it for known intel only (the harness currently lifts it for all tiles, which made the Environment (Shoal) AI scan the whole map and stall some missions; now skipped for Environment).
+- **Fairness (Alien Isolation style)**: the AI plays fair. No global fog lift: each AI player acts only on tiles its own units explored. A belief layer keeps last-seen enemy positions (decay 20 rounds, dropped when the tile is re-seen empty), patrols toward the nearest believed enemy, then objectives, then scouts unexplored tiles. Any difficulty balancing belongs in a separate director layer that must never touch perception or resources (not built yet).
 - **Reinforcement/survive goals** for timed missions (CH9 has an 80-turn limit; CH8 fails if a protected unit drops to <=4 hp).
 
 State: a first version is in `Plugin.cs` (`DumpNarr` objective dump, `Goals()` sets patrol targets per objective every 8 s, Environment skip). It builds, but it is **untested**: the CH1-CH9 re-run was stopped. Partial runs: CH1 ran 60 rounds with no change, CH3 reached the resolution screen at round 4, CH4/CH7 still stalled at round 1.
-Left: verify per mission with the harness (`tools/batch.sh`), tune goal selection (most objectives start disabled and are toggled by trigger actions), restrict the fog lift to known intel, then try a full campaign playthrough.
+Left: verify per mission with the harness (`tools/batch.sh`), tune goal selection (most objectives start disabled and are toggled by trigger actions), then try a full campaign playthrough.
+
+## Status of the 9/10 vs 0/10 result
+That result was measured WITH the old all-tiles fog lift, so it is not a fair-AI number. Fair rerun (10 games) pending: the game install was missing from the Steam folder when the fairness change was written, so the new build is uncompiled and untested.
