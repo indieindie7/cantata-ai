@@ -1,0 +1,60 @@
+kind,round,faction,attacker,target,base,killTerm,hpFrac,final
+kind,round,faction,attacker,target,base,killTerm,hpFrac,final
+kind,round,faction,attacker,target,base,killTerm,hpFrac,final
+kind,round,faction,attacker,target,base,killTerm,hpFrac,final
+kind,round,faction,attacker,target,base,killTerm,hpFrac,final
+tgt,13,Human,Conscript,Remains,0,44,1,00,1,00,0,69
+tgt,13,Human,Recon Rickshaw,Builder Drone,0,50,0,40,1,00,0,50
+tgt,13,Human,Recon Rickshaw,Scrap,0,44,1,00,1,00,0,69
+atk,13,Human,Conscript,Scrap,0,37,1,00,1,00,0,62
+atk,13,Human,Conscript,Remains,0,53,1,00,1,00,0,78
+atk,13,Human,Conscript,Scrap,0,37,1,00,1,00,0,62
+atk,13,Human,Conscript,Scrap,0,37,1,00,1,00,0,62
+atk,13,Human,Conscript,Remains,0,37,1,00,1,00,0,62
+atk,13,Human,Conscript,Scrap,0,37,1,00,1,00,0,62
+atk,13,Human,Conscript,Scrap,0,37,1,00,1,00,0,62
+atk,13,Human,Conscript,Scrap,0,37,1,00,1,00,0,62
+atk,13,Human,Conscript,Remains,0,37,1,00,1,00,0,62
+atk,13,Human,Conscript,Remains,0,53,1,00,1,00,0,78
+atk,13,Human,Conscript,Remains,0,37,1,00,1,00,0,62
+atk,13,Human,Conscript,Scrap,0,37,1,00,1,00,0,62
+atk,13,Human,Recon Rickshaw,Cherubin,0,44,0,70,1,00,0,44
+atk,13,Human,Recon Rickshaw,Remains,0,53,1,00,1,00,0,78
+atk,13,Human,Recon Rickshaw,Builder Drone,0,40,0,40,1,00,0,40
+atk,13,Human,Recon Rickshaw,Remains,0,53,1,00,1,00,0,78
+atk,13,Human,Recon Rickshaw,Cherubin,0,44,0,70,1,00,0,44
+atk,13,Human,Recon Rickshaw,Remains,0,53,1,00,1,00,0,78
+atk,13,Human,Recon Rickshaw,Cherubin,0,44,0,70,1,00,0,44
+atk,13,Human,Recon Rickshaw,Cherubin,0,44,0,70,1,00,0,44
+atk,13,Human,Recon Rickshaw,Cherubin,0,44,0,70,1,00,0,44
+atk,13,Human,Recon Rickshaw,Cherubin,0,44,0,70,1,00,0,44
+atk,13,Human,Recon Rickshaw,Cherubin,0,44,0,70,1,00,0,44
+atk,13,Human,Recon Rickshaw,Cherubin,0,44,0,70,1,00,0,44
+atk,13,Human,Recon Rickshaw,Cherubin,0,44,0,70,1,00,0,44
+atk,13,Human,Recon Rickshaw,Builder Drone,0,40,0,40,1,00,0,40
+atk,13,Human,Recon Rickshaw,Builder Drone,0,40,0,40,1,00,0,40
+atk,13,Human,Recon Rickshaw,Builder Drone,0,40,0,40,1,00,0,40
+atk,13,Human,Recon Rickshaw,Builder Drone,0,40,0,40,1,00,0,40
+atk,13,Human,Recon Rickshaw,Builder Drone,0,40,0,40,1,00,0,40
+atk,13,Human,Recon Rickshaw,Remains,0,53,1,00,1,00,0,78
+atk,13,Human,Recon Rickshaw,Cherubin,0,44,0,70,1,00,0,44
+atk,13,Human,Recon Rickshaw,Builder Drone,0,40,0,40,1,00,0,40
+atk,13,Human,Recon Rickshaw,Remains,0,53,1,00,1,00,0,78
+atk,13,Human,Recon Rickshaw,Builder Drone,0,40,0,40,1,00,0,40
+atk,13,Human,Recon Rickshaw,Cherubin,0,44,0,70,1,00,0,44
+atk,13,Human,Recon Rickshaw,Builder Drone,0,40,0,40,1,00,0,40
+atk,13,Human,Recon Rickshaw,Cherubin,0,44,0,70,1,00,0,44
+atk,13,Human,Recon Rickshaw,Builder Drone,0,40,0,40,1,00,0,40
+atk,13,Human,Recon Rickshaw,Builder Drone,0,40,0,40,1,00,0,40
+atk,13,Human,Recon Rickshaw,Builder Drone,0,40,0,40,1,00,0,40
+atk,13,Human,Recon Rickshaw,Remains,0,53,1,00,1,00,0,78
+atk,13,Human,Recon Rickshaw,Cherubin,0,44,0,70,1,00,0,44
+atk,13,Human,Recon Rickshaw,The Heart,0,34,0,10,1,00,0,34
+atk,13,Human,Recon Rickshaw,Cherubin,0,44,0,70,1,00,0,44
+atk,13,Human,Recon Rickshaw,Builder Drone,0,40,0,40,1,00,0,40
+atk,13,Human,Recon Rickshaw,Builder Drone,0,40,0,40,1,00,0,40
+atk,13,Human,Recon Rickshaw,Builder Drone,0,40,0,40,1,00,0,40
+atk,13,Human,Recon Rickshaw,Remains,0,53,1,00,1,00,0,78
+atk,13,Human,Recon Rickshaw,Builder Drone,0,40,0,40,1,00,0,40
+atk,13,Human,Recon Rickshaw,Builder Drone,0,40,0,40,1,00,0,40
+atk,13,Human,Recon Rickshaw,The Heart,0,34,0,10,1,00,0,34

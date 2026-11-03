@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+<PropertyGroup><CantataDir Condition="'$(CantataDir)'==''">C:/Program Files (x86)/Steam/steamapps/common/Cantata</CantataDir><TargetFramework>net472</TargetFramework><AssemblyName>CantataAIMod</AssemblyName><LangVersion>latest</LangVersion><GenerateAssemblyInfo>false</GenerateAssemblyInfo></PropertyGroup>
+<ItemGroup>
+<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+<Reference Include="Assembly-CSharp"><HintPath>$(CantataDir)/cantata_Data/Managed/Assembly-CSharp.dll</HintPath><Private>false</Private></Reference>
+<Reference Include="UnityEngine"><HintPath>$(CantataDir)/cantata_Data/Managed/UnityEngine.dll</HintPath><Private>false</Private></Reference>
+<Reference Include="UnityEngine.CoreModule"><HintPath>$(CantataDir)/cantata_Data/Managed/UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+<Reference Include="UniTask"><HintPath>$(CantataDir)/cantata_Data/Managed/UniTask.dll</HintPath><Private>false</Private></Reference>
+<Reference Include="BepInEx"><HintPath>$(CantataDir)/BepInEx/core/BepInEx.dll</HintPath><Private>false</Private></Reference>
+<Reference Include="0Harmony"><HintPath>$(CantataDir)/BepInEx/core/0Harmony.dll</HintPath><Private>false</Private></Reference>
+</ItemGroup></Project>
+
