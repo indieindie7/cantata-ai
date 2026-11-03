@@ -32,5 +32,8 @@ Idea: hook the AI into the game's narrative/objective system instead of only fig
 State: a first version is in `Plugin.cs` (`DumpNarr` objective dump, `Goals()` sets patrol targets per objective every 8 s, Environment skip). It builds, but it is **untested**: the CH1-CH9 re-run was stopped. Partial runs: CH1 ran 60 rounds with no change, CH3 reached the resolution screen at round 4, CH4/CH7 still stalled at round 1.
 Left: verify per mission with the harness (`tools/batch.sh`), tune goal selection (most objectives start disabled and are toggled by trigger actions), then try a full campaign playthrough.
 
-## Status of the 9/10 vs 0/10 result
-That result was measured WITH the old all-tiles fog lift, so it is not a fair-AI number. Fair rerun (10 games) pending: the game install was missing from the Steam folder when the fairness change was written, so the new build is uncompiled and untested.
+## Fair-AI result (no fog lift, per-player explored tiles, belief layer)
+Skirmish, 10 games per arm (5 each from the ch1 R10 and R13 saves; P1 Human 10u vs P2 Machine ~70u):
+- Stock AI: P1 eliminated 10/10, mean round 26.7.
+- Mod AI: P1 eliminated 10/10, mean round 21.3 (20% faster).
+The earlier "9/10 vs 0/10" came from the old all-tiles fog lift and is retired. With fair perception the 7:1 side wins either way; the mod's gain is speed, not outcome. Raw lines: harness_results.txt (tags f* = mod, s* = stock).
