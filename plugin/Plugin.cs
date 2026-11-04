@@ -315,4 +315,33 @@ namespace CantataAIMod
             return false;
         }
     }
+
+    // Fairness: stock move scoring reads enemy occupants on ANY tile within radius 5 (fog cheat). Gate to currently visible tiles.
+    [HarmonyPatch(typeof(Scoring), nameof(Scoring.HasThreatsAtTile))]
+    static class P_ThreatsFair
+    {
+        static bool Prefix(Player requestingPlayer, Tile tile, int searchRadius, ref bool __result)
+        {
+            if (Plugin.HEnabled == null || !Plugin.HEnabled.Value || requestingPlayer == null || requestingPlayer.Faction.ToString() == "Environment") return true;
+            bool found = false; var vis = requestingPlayer.CurrentVisibleTiles;
+            tile.IterateSurroundingTiles(searchRadius, (Tile st) =>
+            {
+                var o = st.Occupant;
+                if (o != null && vis.Contains(st) && o.IsOpponentOf(requestingPlayer) && o.CanAttackCheck)
+                    foreach (Tile key in o.CanAttackAspect.AttackPattern.GetAffectedTiles(o.CurrentTile).Keys) if (key == tile) { found = true; break; }
+            }, includeSelf: true, () => !found);
+            __result = found; return false;
+        }
+    }
+
+    // Fairness: CHASE units start moving if an enemy sits on an explorable-but-unseen tile. Restrict to currently visible enemies.
+    [HarmonyPatch(typeof(Decisions), nameof(Decisions.GetAttackMoveDecisions))]
+    static class P_ChaseFair
+    {
+        static void Prefix(Interactable i)
+        {
+            if (Plugin.HEnabled == null || !Plugin.HEnabled.Value || i == null || i.Owner == null || i.Owner.Faction.ToString() == "Environment") return;
+            i.LocalExploredEnemyInteractables.IntersectWith(i.LocalVisibleEnemyInteractables);
+        }
+    }
 }
