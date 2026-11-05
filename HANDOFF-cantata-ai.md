@@ -1,11 +1,11 @@
 # HANDOFF cantata-ai (Cantata BepInEx fair AI mod)
 ## Index (read this first, open one section by line range)
 1. State - repo, commit, remote blocked, game state - lines 10-14
-2. What the mod does - patches, fairness design, not built - lines 16-21
-3. Results - fair 10 games per arm, retired old claim - lines 23-26
-4. Paths - game dir, cfg, source, saves - lines 28-33
-5. Commands - build, deploy, batch harness - lines 35-39
-6. Left - push, campaign goals, director layer - lines 41-45
+2. What the mod does - patches, fairness design, not built - lines 15-20
+3. Results - fair 10 games per arm, retired old claim - lines 21-24
+4. Paths - game dir, cfg, source, saves - lines 25-29
+5. Commands - build, deploy, batch harness - lines 30-34
+6. Left - push, campaign goals, director layer - lines 35-39
 
 ## 1 State
 Repo C:\re\cantata\repo (branch main). Last mod commit f9ea0e0. Remote github.com/indieindie7/cantata-ai does NOT exist; push blocked by classifier (see 6).
